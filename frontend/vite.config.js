@@ -7,13 +7,15 @@ export default defineConfig({
 server: {
     host: '0.0.0.0',
     port: 3000,
+    strictPort: true,
     open: false,
-    allowedHosts: true,
+    allowedHosts: 'all', // Cho phép tất cả các host để không bao giờ bị lỗi màn hình đen nữa
     proxy: {
       '/api': {
-        target: 'https://mirofish-b2jn.onrender.com', // Dán trực tiếp link Render của bạn vào đây cho chắc
+        target: 'https://mirofish-b2jn.onrender.com',
         changeOrigin: true,
-        secure: false
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '') // Thêm dòng này để khớp với cấu hình Backend của dự án
       }
     }
   },
